@@ -1,0 +1,41 @@
+{
+  "name": "@enterprise/data-eng-copilot-bundle",
+  "version": "1.0.0",
+  "description": "Enterprise AI-assisted data engineering toolkit for Copilot instructions, agents, skills, commands, hooks, and MCP server templates.",
+  "private": true,
+  "license": "UNLICENSED",
+  "type": "commonjs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/enterprise/data-eng-copilot-bundle.git"
+  },
+  "keywords": [
+    "copilot",
+    "data-engineering",
+    "pyspark",
+    "airflow",
+    "mcp",
+    "ai-toolkit"
+  ],
+  "bin": {
+    "data-eng-toolkit-setup": "./bin/data-eng-toolkit-setup.js"
+  },
+  "files": [
+    ".github",
+    "AGENTS.md",
+    "bin",
+    "GENAI_DIRECTORY.md",
+    "PLUGIN_ARCHITECTURE_DESIGN.md",
+    "README.md",
+    "setup-toolkit.sh"
+  ],
+  "scripts": {
+    "validate:hooks": "node --check .github/hooks/pre-commit-guard.js && python .github/hooks/post-gen-validator.py --help",
+    "validate:bin": "node --check bin/data-eng-toolkit-setup.js",
+    "validate:manifest": "node -e \"JSON.parse(require('fs').readFileSync('package.json', 'utf8')); console.log('package manifest OK')\"",
+    "validate": "npm run validate:manifest && npm run validate:bin && npm run validate:hooks"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

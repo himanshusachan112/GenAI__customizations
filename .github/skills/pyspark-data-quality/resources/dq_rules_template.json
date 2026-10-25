@@ -1,0 +1,19 @@
+{
+  "default_rules": {
+    "primary_key": {
+      "must_be_unique": true,
+      "allow_null": false
+    },
+    "timestamps": {
+      "created_at": {
+        "max_future_days": 0
+      },
+      "valid_to": {
+        "must_be_after": "valid_from"
+      }
+    },
+    "numeric_metrics": {
+      "non_negative": true
+    }
+  }
+}

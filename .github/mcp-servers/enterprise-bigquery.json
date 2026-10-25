@@ -1,0 +1,38 @@
+{
+  "name": "enterprise-bigquery",
+  "description": "Secure MCP server template for inspecting corporate BigQuery schemas, partition keys, and query cost estimates without exposing raw service account keys.",
+  "transport": {
+    "type": "stdio",
+    "command": "${ENTERPRISE_BIGQUERY_MCP_COMMAND}",
+    "args": [
+      "--project",
+      "${BIGQUERY_PROJECT_ID}",
+      "--location",
+      "${BIGQUERY_LOCATION}"
+    ]
+  },
+  "security": {
+    "credential_strategy": "application_default_credentials_or_workload_identity",
+    "forbidden": [
+      "raw_service_account_key_json",
+      "embedded_private_keys",
+      "hardcoded_project_credentials"
+    ],
+    "required_environment": [
+      "ENTERPRISE_BIGQUERY_MCP_COMMAND",
+      "BIGQUERY_PROJECT_ID",
+      "BIGQUERY_LOCATION"
+    ]
+  },
+  "capabilities": [
+    "list_datasets",
+    "describe_table_schema",
+    "inspect_partitioning",
+    "estimate_query_cost"
+  ],
+  "data_handling": {
+    "allow_raw_row_access": false,
+    "metadata_only_by_default": true,
+    "log_sensitive_values": false
+  }
+}

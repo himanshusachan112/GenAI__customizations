@@ -1,0 +1,40 @@
+{
+  "name": "internal-catalog",
+  "description": "Secure MCP server template for fetching upstream and downstream lineage from internal catalog systems such as DataHub or OpenMetadata.",
+  "transport": {
+    "type": "stdio",
+    "command": "${INTERNAL_CATALOG_MCP_COMMAND}",
+    "args": [
+      "--catalog-url",
+      "${INTERNAL_CATALOG_URL}",
+      "--auth-mode",
+      "environment"
+    ]
+  },
+  "security": {
+    "credential_strategy": "environment_token_or_managed_identity",
+    "forbidden": [
+      "embedded_catalog_tokens",
+      "hardcoded_basic_auth",
+      "raw_personal_access_tokens"
+    ],
+    "required_environment": [
+      "INTERNAL_CATALOG_MCP_COMMAND",
+      "INTERNAL_CATALOG_URL"
+    ],
+    "optional_environment": [
+      "INTERNAL_CATALOG_TOKEN"
+    ]
+  },
+  "capabilities": [
+    "lookup_dataset_owner",
+    "fetch_upstream_lineage",
+    "fetch_downstream_lineage",
+    "retrieve_table_contracts"
+  ],
+  "data_handling": {
+    "metadata_only_by_default": true,
+    "allow_raw_row_access": false,
+    "log_sensitive_values": false
+  }
+}

@@ -1,0 +1,63 @@
+name: enterprise-data-engineering-ai-toolkit
+version: 1.0.0
+description: Standard AI-assisted data-engineering toolkit for PySpark, SQL, Airflow, data quality, and governed enterprise metadata access.
+publisher: enterprise-data-platform-team
+repository: https://github.com/enterprise/data-eng-copilot-bundle
+
+distribution:
+  supported_modes:
+    - git_submodule
+    - scaffold_cli
+    - internal_ide_extension
+    - copilot_plugin_manifest
+  recommended_pin: semver_tag
+  example_version: v1.2.0
+
+instructions:
+  global:
+    - .github/copilot-instructions.md
+    - AGENTS.md
+  scoped:
+    - path: .github/instructions/python.instructions.md
+      applyTo: "**/*.py"
+    - path: .github/instructions/sql.instructions.md
+      applyTo: "**/*.sql"
+
+agents:
+  - name: data-engineer
+    path: .github/agents/data-engineer.agent.md
+  - name: qa-engineer
+    path: .github/agents/qa-engineer.agent.md
+
+skills:
+  - name: data-quality-checker
+    path: .github/skills/data-quality-checker/SKILL.md
+  - name: pyspark-data-quality
+    path: .github/skills/pyspark-data-quality/SKILL.md
+
+commands:
+  - name: review-pipeline
+    path: .github/commands/review-pipeline.md
+  - name: optimize-sql
+    path: .github/commands/optimize-sql.md
+
+hooks:
+  pre_commit:
+    script: .github/hooks/pre-commit-guard.js
+    runtime: node
+  generated_dag_validation:
+    script: .github/hooks/post-gen-validator.py
+    runtime: python
+
+mcpServers:
+  - name: enterprise-bigquery
+    path: .github/mcp-servers/enterprise-bigquery.json
+  - name: internal-catalog
+    path: .github/mcp-servers/internal-catalog.json
+
+setup:
+  script: setup-toolkit.sh
+  actions:
+    - copy_or_symlink_toolkit_assets
+    - create_local_mcp_config
+    - install_git_hooks
